@@ -37,6 +37,11 @@ export class LoginComponent implements OnInit {
     onSubmit() {
         console.log(this.loginForm.value)
 
+        this.router.navigate(['dashboard'])
+    }
+
+    createAccount() {
+        this.router.navigate(['auth','registration']);
     }
 
 }

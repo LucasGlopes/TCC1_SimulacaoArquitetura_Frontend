@@ -45,7 +45,7 @@
                 type="submit" 
                 color="primary" 
                 [disabled]="loginForm.invalid"
-                class="enter-button"    
+                class="enter-button"   
             >
                 Entrar
             </button>
@@ -56,7 +56,8 @@
             <button 
                 mat-raised-button 
                 color="primary" 
-                class="create-button"    
+                class="create-button"  
+                (click)="createAccount()"  
             >
                 Criar conta
             </button>
