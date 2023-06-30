@@ -1,26 +1,42 @@
 <div class="container">
     <div class="registration-box">
         <div class="registration-header">
-            <h1>SISTEMA</h1>
+            <h1>PlaSO</h1>
         </div>
         <div class="title">
-            <p>Crie sua conta!</p>
+            <p>Cadastro de Usuário</p>
         </div>
         <hr class="line"/>
         <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class="registration-form">
-            <mat-form-field 
-                [hideRequiredMarker]="true"  
-                appearance="outline"  
-                style="width:90% !important;"
-            >
-                <mat-label>Nome</mat-label>
-                    <input 
-                        type="text" 
-                        matInput 
-                        formControlName="name"
-                    >
-                    <mat-error *ngIf="registrationForm.controls['name'].invalid">E-mail inválido</mat-error>
-            </mat-form-field>
+            <div class="field-row">
+                <mat-form-field 
+                    [hideRequiredMarker]="true"  
+                    appearance="outline"  
+                    style="width:40% !important;"
+                >
+                    <mat-label>Nome</mat-label>
+                        <input 
+                            type="text" 
+                            matInput 
+                            formControlName="name"
+                        >
+                        <mat-error *ngIf="registrationForm.controls['name'].invalid">Nome inválido</mat-error>
+                </mat-form-field>
+                <mat-form-field 
+                    [hideRequiredMarker]="true"  
+                    appearance="outline"  
+                    style="width:55% !important;"
+                >
+                    <mat-label>Sobrenome</mat-label>
+                        <input 
+                            type="text" 
+                            matInput 
+                            formControlName="lastName"
+                        >
+                        <mat-error *ngIf="registrationForm.controls['lastName'].invalid">Nome inválido</mat-error>
+                </mat-form-field>
+
+            </div>
             <div class="field-row">
                 <mat-form-field 
                     [hideRequiredMarker]="true"
@@ -141,11 +157,11 @@
                 </mat-form-field>
             </div>
             
-            <div class="field-row">
+            <!-- <div class="field-row">
                 <mat-form-field 
                     [hideRequiredMarker]="true"  
                     appearance="outline" 
-                    style="width:50% !important;" 
+                    style="width:55% !important;" 
                 >
                     <mat-label>Empresa</mat-label>
                     <input 
@@ -170,7 +186,7 @@
                     >
                     <mat-error *ngIf="registrationForm.controls['sector'].invalid">Este campo é obrigatório</mat-error>
                 </mat-form-field>
-            </div>
+            </div> -->
 
             <hr class="line"/>
 

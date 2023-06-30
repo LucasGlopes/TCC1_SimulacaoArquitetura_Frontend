@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SelectorOption } from 'src/app/models/selector.model';
+import { User } from 'src/app/models/user.model';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { CurrentUserService } from 'src/app/services/currentUser.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-registration',
@@ -29,16 +33,20 @@ export class RegistrationComponent {
 
     constructor(
         private router: Router,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private auth: AuthenticationService,
+        private notification: NotificationService,
+        private currentUser: CurrentUserService
     ){}
 
     ngOnInit(): void {
-        
+        console.log(this.currentUser.getUserValues())
     }
 
     initForm() {
         const form = {
             name:['', [Validators.required]],
+            lastName: ['', [Validators.required]],
             phone:['', [Validators.required]],
             dateBirth:['', [Validators.required]],
             sex:['', [Validators.required]],
@@ -46,8 +54,8 @@ export class RegistrationComponent {
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required]],
             confirmPassword: ['', [Validators.required]],
-            company: ['', [Validators.required]],
-            sector: ['', [Validators.required]],
+            // company: ['', [Validators.required]],
+            // sector: ['', [Validators.required]],
         }
 
         return this.fb.group(form);
@@ -62,9 +70,25 @@ export class RegistrationComponent {
     }
 
     onSubmit(){
-        console.log(this.registrationForm.value);
+        const newUser: User = {
+            cpf: this.registrationForm.controls['cpf'].value,
+            dataNascimento: JSON.stringify(this.registrationForm.controls['dateBirth'].value).substring(1, 11),
+            email: this.registrationForm.controls['email'].value,
+            firstName: this.registrationForm.controls['name'].value,
+            lastName: this.registrationForm.controls['lastName'].value,
+            password: this.registrationForm.controls['password'].value,
+            sexo: this.registrationForm.controls['sex'].value,
+            telefone: this.registrationForm.controls['phone'].value,
+        }
 
-        this.router.navigate(['dashboard']);
+        this.auth.createUser(newUser).subscribe({
+            next: (res) => {
+                this.router.navigate(['dashboard']);
+            },
+            error: (erro) => {
+                this.notification.openErrorSnackBar('Ocorreu um erro no cadastro.');
+            }
+        })
 
     }
 

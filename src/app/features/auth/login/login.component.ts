@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 
 @Component({
@@ -14,7 +16,9 @@ export class LoginComponent implements OnInit {
 
     constructor(
         private router: Router,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private authService: AuthenticationService,
+        private notification: NotificationService
     ){}
 
     ngOnInit(): void {
@@ -35,9 +39,15 @@ export class LoginComponent implements OnInit {
     }
 
     onSubmit() {
-        console.log(this.loginForm.value)
-
-        this.router.navigate(['dashboard'])
+        this.authService.login(this.loginForm.value).subscribe({
+            next: (res) => {
+                // console.log(res)
+                this.router.navigate(['dashboard']);
+            },
+            error: (erro) => {
+                this.notification.openErrorSnackBar('E-mail e/ou senha inválidos.');
+            }
+        }) 
     }
 
     createAccount() {
