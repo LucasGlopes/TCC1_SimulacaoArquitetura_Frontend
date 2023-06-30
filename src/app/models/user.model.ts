@@ -1,12 +1,12 @@
 export interface User {
     cpf: string;
-    dataNascimento: string;
+    dateOfBirth: string;
     email: string;
     firstName: string;
     lastName: string;
     password: string;
-    sexo: string;
-    telefone: string;
+    sex: string;
+    phone: string;
 }
 
 export interface CurrentUser {

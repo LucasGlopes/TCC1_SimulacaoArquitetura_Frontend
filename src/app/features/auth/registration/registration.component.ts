@@ -36,11 +36,10 @@ export class RegistrationComponent {
         private fb: FormBuilder,
         private auth: AuthenticationService,
         private notification: NotificationService,
-        private currentUser: CurrentUserService
     ){}
 
     ngOnInit(): void {
-        console.log(this.currentUser.getUserValues())
+        
     }
 
     initForm() {
@@ -54,8 +53,6 @@ export class RegistrationComponent {
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required]],
             confirmPassword: ['', [Validators.required]],
-            // company: ['', [Validators.required]],
-            // sector: ['', [Validators.required]],
         }
 
         return this.fb.group(form);
@@ -72,18 +69,22 @@ export class RegistrationComponent {
     onSubmit(){
         const newUser: User = {
             cpf: this.registrationForm.controls['cpf'].value,
-            dataNascimento: JSON.stringify(this.registrationForm.controls['dateBirth'].value).substring(1, 11),
+            dateOfBirth: JSON.stringify(this.registrationForm.controls['dateBirth'].value).substring(1, 11),
             email: this.registrationForm.controls['email'].value,
             firstName: this.registrationForm.controls['name'].value,
             lastName: this.registrationForm.controls['lastName'].value,
             password: this.registrationForm.controls['password'].value,
-            sexo: this.registrationForm.controls['sex'].value,
-            telefone: this.registrationForm.controls['phone'].value,
+            sex: this.registrationForm.controls['sex'].value,
+            phone: this.registrationForm.controls['phone'].value,
         }
 
         this.auth.createUser(newUser).subscribe({
             next: (res) => {
-                this.router.navigate(['dashboard']);
+                // this.router.navigate(['dashboard']);
+                this.notification.openSuccessSnackBar('Usuário cadastrado com sucesso!')
+                .afterDismissed().subscribe(() =>
+                    this.router.navigate(['auth','login'])
+                );
             },
             error: (erro) => {
                 this.notification.openErrorSnackBar('Ocorreu um erro no cadastro.');

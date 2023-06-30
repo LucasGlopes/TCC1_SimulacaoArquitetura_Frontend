@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { CurrentUser } from 'src/app/models/user.model';
+import { CurrentUserService } from 'src/app/services/currentUser.service';
 
 
 @Component({
@@ -18,7 +20,8 @@ export class LoginComponent implements OnInit {
         private router: Router,
         private fb: FormBuilder,
         private authService: AuthenticationService,
-        private notification: NotificationService
+        private notification: NotificationService,
+        private currentUser: CurrentUserService,
     ){}
 
     ngOnInit(): void {
@@ -42,7 +45,9 @@ export class LoginComponent implements OnInit {
         this.authService.login(this.loginForm.value).subscribe({
             next: (res) => {
                 // console.log(res)
-                this.router.navigate(['dashboard']);
+                // this.router.navigate(['dashboard']);
+                const user: CurrentUser = this.currentUser.getUserValues();
+                this.notification.openSuccessSnackBar(`Seja bem-vindo(a), ${user.firstName}!`);
             },
             error: (erro) => {
                 this.notification.openErrorSnackBar('E-mail e/ou senha inválidos.');

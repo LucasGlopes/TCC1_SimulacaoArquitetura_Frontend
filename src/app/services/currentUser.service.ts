@@ -10,7 +10,7 @@ export class CurrentUserService {
         this.user.next(user);
     }
 
-    getUserValues() {
+    getUserValues(): CurrentUser {
         return this.user.value;
     }
 

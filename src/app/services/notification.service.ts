@@ -13,14 +13,15 @@ export class NotificationService {
 
     openErrorSnackBar(msg: string){
         this._snackBar.open(msg, 'X', {
-            duration: 5000,
+            duration: 3000,
             panelClass: ['red-snackbar'],
         });
+
     }
 
     openSuccessSnackBar(msg: string){
-        this._snackBar.open(msg, 'X', {
-            duration: 5000,
+        return this._snackBar.open(msg, 'X', {
+            duration: 3000,
             panelClass: ['green-snackbar'],
         });
     }
