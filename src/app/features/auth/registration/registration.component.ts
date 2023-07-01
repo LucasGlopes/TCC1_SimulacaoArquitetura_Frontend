@@ -80,10 +80,9 @@ export class RegistrationComponent {
 
         this.auth.createUser(newUser).subscribe({
             next: (res) => {
-                // this.router.navigate(['dashboard']);
                 this.notification.openSuccessSnackBar('Usuário cadastrado com sucesso!')
                 .afterDismissed().subscribe(() =>
-                    this.router.navigate(['auth','login'])
+                    this.router.navigate(['dashboard'])
                 );
             },
             error: (erro) => {

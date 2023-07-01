@@ -44,10 +44,7 @@ export class LoginComponent implements OnInit {
     onSubmit() {
         this.authService.login(this.loginForm.value).subscribe({
             next: (res) => {
-                // console.log(res)
-                // this.router.navigate(['dashboard']);
-                const user: CurrentUser = this.currentUser.getUserValues();
-                this.notification.openSuccessSnackBar(`Seja bem-vindo(a), ${user.firstName}!`);
+                this.router.navigate(['dashboard']);
             },
             error: (erro) => {
                 this.notification.openErrorSnackBar('E-mail e/ou senha inválidos.');
